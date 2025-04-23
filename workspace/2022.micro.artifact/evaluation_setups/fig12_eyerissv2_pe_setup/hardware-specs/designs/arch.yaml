@@ -59,39 +59,65 @@ architecture:
               subclass: Imac
               attributes:
                 datawidth: 8
+                
+                
+
 sparse_optimizations:
   targets:
-    - name: BackingStorage
-      representation-format:
+    - name: BackingStorage 
+      representation-format:          
         data-spaces:
-          - name: Inputs
-            rank-application-order: inner-to-outer
+          - name: Inputs          
             ranks:
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: B
-              - format: B
-                metadata-word-bits: 1
-                flattened_rankIDs: [ [M] ]
-          
-          - name: Outputs
+              - format: UOP               # DRAM M temporal
+                payload-word-bits: 0    
+              - format: UOP               # DRAM N temporal
+                payload-word-bits: 0    
+              - format: UOP               # SMEM M temporal
+                payload-word-bits: 0    
+              - format: UOP               # SMEM N temporal
+                payload-word-bits: 0    
+              - format: UOP               # SMEM M spatial
+                payload-word-bits: 0 
+              - format: UOP               # RF M spatial
+                payload-word-bits: 0
+              - format: CP                # RF K spatial
+                metadata-word-bits: 2           
             rank-application-order: inner-to-outer
+    
+    - name: iact_spad   
+      representation-format:          
+        data-spaces:
+          - name: Inputs          
             ranks:
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: RLE
-              - format: B
-              - format: B
-                metadata-word-bits: 1
-                flattened_rankIDs: [ [N] ]
-    - name: iact_spad
+              - format: UOP               # SMEM M temporal
+                payload-word-bits: 0    
+              - format: UOP               # SMEM N temporal
+                payload-word-bits: 0    
+              - format: UOP               # SMEM M spatial
+                payload-word-bits: 0
+              - format: CP                # RF K spatial
+                metadata-word-bits: 2
+            rank-application-order: inner-to-outer
+    
+    - name: weight_spad            
+      action-optimization:    
+        - type: skipping
+          target: Inputs           
+          condition-on: [ Weights ] 
+
+    - name: reg        
+      representation-format:          
+        data-spaces:
+          - name: Inputs          
+            ranks:            
+              - format: CP   
+                metadata-word-bits: 2
       action-optimization:
         - type: skipping
-          options:
-            - target: Weights
-              condition-on: [ Inputs, Outputs ]
+          target: Inputs
+          condition-on: [ Weights ] 
+
+Weights:
+  distribution: fixed-structured
+  density: 0.5
