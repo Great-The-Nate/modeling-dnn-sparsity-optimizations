@@ -103,8 +103,8 @@ sparse_optimizations:
     - name: weight_spad            
       action-optimization:    
         - type: skipping
-          target: Inputs           
-          condition-on: [ Weights ] 
+          target: Inputs
+          condition-on: [ Weights, Inputs ] 
 
     - name: reg        
       representation-format:          
@@ -116,8 +116,12 @@ sparse_optimizations:
       action-optimization:
         - type: skipping
           target: Inputs
-          condition-on: [ Weights ] 
+          condition-on: [ Weights, Inputs ] 
 
 Weights:
+  distribution: fixed-structured
+  density: 0.5
+  
+Inputs: 
   distribution: fixed-structured
   density: 0.5
