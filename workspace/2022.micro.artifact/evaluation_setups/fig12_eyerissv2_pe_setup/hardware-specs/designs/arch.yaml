@@ -62,66 +62,66 @@ architecture:
                 
                 
 
-sparse_optimizations:
-  targets:
-    - name: BackingStorage 
-      representation-format:          
-        data-spaces:
-          - name: Inputs          
-            ranks:
-              - format: UOP               # DRAM M temporal
-                payload-word-bits: 0    
-              - format: UOP               # DRAM N temporal
-                payload-word-bits: 0    
-              - format: UOP               # SMEM M temporal
-                payload-word-bits: 0    
-              - format: UOP               # SMEM N temporal
-                payload-word-bits: 0    
-              - format: UOP               # SMEM M spatial
-                payload-word-bits: 0 
-              - format: UOP               # RF M spatial
-                payload-word-bits: 0
-              - format: CP                # RF K spatial
-                metadata-word-bits: 2           
-            rank-application-order: inner-to-outer
+# sparse_optimizations:
+#   targets:
+#     - name: BackingStorage 
+#       representation-format:          
+#         data-spaces:
+#           - name: Inputs          
+#             ranks:
+#               - format: UOP               # DRAM M temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # DRAM N temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # SMEM M temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # SMEM N temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # SMEM M spatial
+#                 payload-word-bits: 0 
+#               - format: UOP               # RF M spatial
+#                 payload-word-bits: 0
+#               - format: B                # RF K spatial
+#                 metadata-word-bits: 2           
+#             rank-application-order: inner-to-outer
     
-    - name: iact_spad   
-      representation-format:          
-        data-spaces:
-          - name: Inputs          
-            ranks:
-              - format: UOP               # SMEM M temporal
-                payload-word-bits: 0    
-              - format: UOP               # SMEM N temporal
-                payload-word-bits: 0    
-              - format: UOP               # SMEM M spatial
-                payload-word-bits: 0
-              - format: CP                # RF K spatial
-                metadata-word-bits: 2
-            rank-application-order: inner-to-outer
+#     - name: iact_spad   
+#       representation-format:          
+#         data-spaces:
+#           - name: Inputs          
+#             ranks:
+#               - format: UOP               # SMEM M temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # SMEM N temporal
+#                 payload-word-bits: 0    
+#               - format: UOP               # SMEM M spatial
+#                 payload-word-bits: 0
+#               - format: B                # RF K spatial
+#                 metadata-word-bits: 2
+#             rank-application-order: inner-to-outer
     
-    - name: weight_spad            
-      action-optimization:    
-        - type: skipping
-          target: Inputs
-          condition-on: [ Weights, Inputs ] 
+#     - name: weight_spad            
+#       action-optimization:    
+#         - type: skipping
+#           target: Inputs
+#           condition-on: [ Weights, Inputs ] 
 
-    - name: reg        
-      representation-format:          
-        data-spaces:
-          - name: Inputs          
-            ranks:            
-              - format: CP   
-                metadata-word-bits: 2
-      action-optimization:
-        - type: skipping
-          target: Inputs
-          condition-on: [ Weights, Inputs ] 
+#     - name: reg        
+#       representation-format:          
+#         data-spaces:
+#           - name: Inputs          
+#             ranks:            
+#               - format: B   
+#                 metadata-word-bits: 2
+#       action-optimization:
+#         - type: skipping
+#           target: Inputs
+#           condition-on: [ Weights, Inputs ] 
 
-Weights:
-  distribution: fixed-structured
-  density: 0.5
+# Weights:
+#   distribution: fixed-structured
+#   density: 0.2
   
-Inputs: 
-  distribution: fixed-structured
-  density: 0.5
+# Inputs: 
+#   distribution: fixed-structured
+#   density: 0.2
