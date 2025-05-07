@@ -1,6 +1,9 @@
+# Modeling Structured vs Unstructured and Dual vs Single Sided Sparsity in DNNs
 This repository builds significantly off of the work done by the Accelergy Project with Sparseloop (https://github.com/Accelergy-Project/micro22-sparseloop-artifact). 
 
-## System requirement
+The paper on this work can be found in the paper.pdf file.
+
+## Setup
 ### Step 0: Prepare your `docker-compose.yaml`
 -------------------------
 
