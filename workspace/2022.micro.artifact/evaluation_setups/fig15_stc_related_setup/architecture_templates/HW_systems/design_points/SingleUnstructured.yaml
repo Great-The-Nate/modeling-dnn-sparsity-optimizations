@@ -1,0 +1,5 @@
+design_points:
+  - design_name: DSTC-RF2x-24-bandwidth
+    configurations:
+      dataflow: DSTC-Os-constraints
+      sparse_optimizations: LRF-PosTiling

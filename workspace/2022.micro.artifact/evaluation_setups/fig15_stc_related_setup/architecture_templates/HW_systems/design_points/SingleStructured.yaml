@@ -1,0 +1,6 @@
+design_points:
+  - design_name: STC_flexible-RF2x-24-bandwidth
+    configurations:
+      dataflow: FlexibleGH-Ms-constraints
+      sparse_optimizations: RF-spatial-skipping
+      representation: "CP" 
