@@ -1,0 +1,7 @@
+A:
+  distribution: fixed-structured
+  density: 0.33333
+
+B:
+  distribution: fixed-structured
+  density: 0.33333
